@@ -1,4 +1,8 @@
+# Database connection details
 spring.application.name=backend
 spring.datasource.url=jdbc:mysql://localhost:3306/plan_sprint
 spring.datasource.username=root
 spring.datasource.password=root
+# Flyway configuration
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migrations
