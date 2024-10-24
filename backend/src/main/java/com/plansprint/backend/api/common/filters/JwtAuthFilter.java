@@ -1,6 +1,6 @@
-package com.plansprint.backend.common.filters;
+package com.plansprint.backend.api.common.filters;
 
-import com.plansprint.backend.common.services.JwtService;
+import com.plansprint.backend.api.common.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

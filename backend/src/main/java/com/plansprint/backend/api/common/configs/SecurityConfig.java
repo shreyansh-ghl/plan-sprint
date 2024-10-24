@@ -1,6 +1,6 @@
-package com.plansprint.backend.common.configs;
+package com.plansprint.backend.api.common.configs;
 
-import com.plansprint.backend.common.filters.JwtAuthFilter;
+import com.plansprint.backend.api.common.filters.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -1,11 +1,11 @@
-package com.plansprint.backend.auth.controllers;
+package com.plansprint.backend.api.auth.controllers;
 
-import com.plansprint.backend.auth.dtos.LoginResponseDto;
-import com.plansprint.backend.auth.dtos.LoginUserDto;
-import com.plansprint.backend.auth.dtos.RegisterUserDto;
-import com.plansprint.backend.auth.services.AuthService;
-import com.plansprint.backend.common.services.JwtService;
-import com.plansprint.backend.users.entities.UserEntity;
+import com.plansprint.backend.api.auth.dtos.LoginResponseDto;
+import com.plansprint.backend.api.auth.dtos.LoginUserDto;
+import com.plansprint.backend.api.auth.dtos.RegisterUserDto;
+import com.plansprint.backend.api.auth.services.AuthService;
+import com.plansprint.backend.api.common.services.JwtService;
+import com.plansprint.backend.api.users.entities.UserEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

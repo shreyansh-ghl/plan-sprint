@@ -1,4 +1,4 @@
-package com.plansprint.backend.common.services;
+package com.plansprint.backend.api.common.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

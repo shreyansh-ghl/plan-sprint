@@ -1,7 +1,7 @@
-package com.plansprint.backend.users.entities;
+package com.plansprint.backend.api.users.entities;
 
-import com.plansprint.backend.common.entities.BaseEntity;
-import com.plansprint.backend.users.enums.Role;
+import com.plansprint.backend.api.common.entities.BaseEntity;
+import com.plansprint.backend.api.users.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

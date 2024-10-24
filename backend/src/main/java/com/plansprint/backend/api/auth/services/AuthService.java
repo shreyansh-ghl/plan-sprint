@@ -1,10 +1,10 @@
-package com.plansprint.backend.auth.services;
+package com.plansprint.backend.api.auth.services;
 
-import com.plansprint.backend.auth.dtos.LoginUserDto;
-import com.plansprint.backend.auth.dtos.RegisterUserDto;
-import com.plansprint.backend.users.entities.UserEntity;
-import com.plansprint.backend.users.enums.Role;
-import com.plansprint.backend.users.repositories.UserRepository;
+import com.plansprint.backend.api.auth.dtos.LoginUserDto;
+import com.plansprint.backend.api.auth.dtos.RegisterUserDto;
+import com.plansprint.backend.api.users.entities.UserEntity;
+import com.plansprint.backend.api.users.enums.Role;
+import com.plansprint.backend.api.users.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +30,6 @@ public class AuthService {
                 .setEmail(registerUserDto.getEmail())
                 .setPassword(passwordEncoder.encode(registerUserDto.getPassword()))
                 .setRole(Role.USER); // set user as a normal user via signup flow
-
-        System.out.println(userEntity.toString());
 
         return userRepository.save(userEntity);
     }

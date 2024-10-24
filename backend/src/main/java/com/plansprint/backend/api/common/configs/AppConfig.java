@@ -1,6 +1,6 @@
-package com.plansprint.backend.common.configs;
+package com.plansprint.backend.api.common.configs;
 
-import com.plansprint.backend.users.repositories.UserRepository;
+import com.plansprint.backend.api.users.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

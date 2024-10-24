@@ -1,4 +1,4 @@
-package com.plansprint.backend.auth.dtos;
+package com.plansprint.backend.api.auth.dtos;
 
 public class LoginResponseDto {
     private String token;

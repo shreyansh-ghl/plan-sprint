@@ -1,4 +1,4 @@
-package com.plansprint.backend.common.entities;
+package com.plansprint.backend.api.common.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

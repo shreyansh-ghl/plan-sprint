@@ -1,6 +1,6 @@
-package com.plansprint.backend.users.repositories;
+package com.plansprint.backend.api.users.repositories;
 
-import com.plansprint.backend.users.entities.UserEntity;
+import com.plansprint.backend.api.users.entities.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

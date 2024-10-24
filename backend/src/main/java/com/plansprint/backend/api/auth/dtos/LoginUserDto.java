@@ -1,7 +1,7 @@
-package com.plansprint.backend.auth.dtos;
+package com.plansprint.backend.api.auth.dtos;
 
 // TODO: apply validations
-public class RegisterUserDto {
+public class LoginUserDto {
     private String email;
 
     private String password;
