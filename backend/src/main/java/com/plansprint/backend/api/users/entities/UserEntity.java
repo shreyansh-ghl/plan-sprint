@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id;
+        return email;
     }
 
     @Override
@@ -77,6 +77,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
     public UserEntity setRole(Role role) {
         this.role = role;
         return this;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

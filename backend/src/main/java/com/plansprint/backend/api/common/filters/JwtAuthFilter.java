@@ -29,8 +29,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     public JwtAuthFilter(
             JwtService jwtService,
             UserDetailsService userDetailsService,
-            HandlerExceptionResolver handlerExceptionResolver
-    ) {
+            HandlerExceptionResolver handlerExceptionResolver) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
@@ -40,9 +39,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authentication");
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+        final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -51,19 +49,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             final String jwtToken = authHeader.substring(7);
-            final String userId = jwtService.getSubjectFromToken(jwtToken);
+            final String email = jwtService.getSubjectFromToken(jwtToken);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (userId != null && authentication == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userId); // TODO: Use caching
+            if (email != null && authentication == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
 
-                if (jwtService.isTokenValid(jwtToken, userId)) {
+                if (jwtService.isTokenValid(jwtToken, email)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
-                            userDetails.getAuthorities() // TODO: Set Role here
-                    );
+                            userDetails.getAuthorities());
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);

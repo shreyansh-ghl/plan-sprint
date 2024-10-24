@@ -31,7 +31,7 @@ public class JwtService {
                 .parserBuilder()
                 .setSigningKey(generateSignInKey())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 

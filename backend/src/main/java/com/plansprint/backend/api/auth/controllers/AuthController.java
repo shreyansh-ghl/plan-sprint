@@ -6,6 +6,8 @@ import com.plansprint.backend.api.auth.dtos.RegisterUserDto;
 import com.plansprint.backend.api.auth.services.AuthService;
 import com.plansprint.backend.api.common.services.JwtService;
 import com.plansprint.backend.api.users.entities.UserEntity;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +33,7 @@ public class AuthController {
     public ResponseEntity<UserEntity> register(@RequestBody RegisterUserDto registerUserDto) {
         UserEntity registeredUser = authService.signup(registerUserDto);
 
-        return ResponseEntity.ok(registeredUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
     @PostMapping("/login")
@@ -41,9 +43,10 @@ public class AuthController {
         // TODO: improve data type casting
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", authenticatedUser.getRole());
-        String jwtToken = jwtService.generateToken(claims, authenticatedUser.id);
+        String jwtToken = jwtService.generateToken(claims, authenticatedUser.getEmail());
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto().setToken(jwtToken)
+        LoginResponseDto loginResponseDto = new LoginResponseDto()
+                .setToken(jwtToken)
                 .setExpiresIn(jwtService.getExpirationInMs());
 
         return ResponseEntity.ok(loginResponseDto);
