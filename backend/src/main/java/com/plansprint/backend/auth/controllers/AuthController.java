@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/auth")
@@ -37,9 +38,13 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> authenticate(@RequestBody LoginUserDto loginUserDto) {
         UserEntity authenticatedUser = authService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken((Map<String, Object>) authenticatedUser, authenticatedUser.id); // TODO: improve data type
+        // TODO: improve data type casting
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", authenticatedUser.getRole());
+        String jwtToken = jwtService.generateToken(claims, authenticatedUser.id);
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto().setToken(jwtToken).setExpiresIn(jwtService.getExpirationInMs());
+        LoginResponseDto loginResponseDto = new LoginResponseDto().setToken(jwtToken)
+                .setExpiresIn(jwtService.getExpirationInMs());
 
         return ResponseEntity.ok(loginResponseDto);
     }

@@ -3,6 +3,7 @@ package com.plansprint.backend.auth.services;
 import com.plansprint.backend.auth.dtos.LoginUserDto;
 import com.plansprint.backend.auth.dtos.RegisterUserDto;
 import com.plansprint.backend.users.entities.UserEntity;
+import com.plansprint.backend.users.enums.Role;
 import com.plansprint.backend.users.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,8 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -26,7 +28,10 @@ public class AuthService {
     public UserEntity signup(RegisterUserDto registerUserDto) {
         UserEntity userEntity = new UserEntity()
                 .setEmail(registerUserDto.getEmail())
-                .setPassword(registerUserDto.getPassword());
+                .setPassword(passwordEncoder.encode(registerUserDto.getPassword()))
+                .setRole(Role.USER); // set user as a normal user via signup flow
+
+        System.out.println(userEntity.toString());
 
         return userRepository.save(userEntity);
     }
@@ -39,6 +44,7 @@ public class AuthService {
                 )
         );
 
-        return userRepository.findByEmail(loginUserDto.getEmail()).orElseThrow();
+        return userRepository.findByEmail(loginUserDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Something went wrong "));
     }
 }

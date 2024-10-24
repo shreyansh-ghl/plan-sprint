@@ -21,6 +21,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
 
@@ -67,5 +68,24 @@ public class UserEntity extends BaseEntity implements UserDetails {
     public UserEntity setEmail(String email) {
         this.email = email;
         return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public UserEntity setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
