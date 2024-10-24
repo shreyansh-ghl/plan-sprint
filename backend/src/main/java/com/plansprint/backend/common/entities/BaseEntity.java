@@ -7,11 +7,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public abstract class Base {
+public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    public String id;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -24,7 +24,7 @@ public abstract class Base {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public Base() {
+    public BaseEntity() {
     }
 
     public String getId() {
