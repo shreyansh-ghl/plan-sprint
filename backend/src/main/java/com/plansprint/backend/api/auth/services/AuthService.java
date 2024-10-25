@@ -50,6 +50,6 @@ public class AuthService {
         );
 
         return userRepository.findByEmail(loginReqDto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Something went wrong "));
+                .orElseThrow(() -> new RuntimeException("Unable to authenticate user."));
     }
 }
