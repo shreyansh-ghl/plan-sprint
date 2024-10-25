@@ -1,5 +1,6 @@
 package com.plansprint.backend.api.users.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.plansprint.backend.api.common.entities.BaseEntity;
 import com.plansprint.backend.api.users.enums.Role;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -25,14 +27,46 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "role")
     private Role role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(); // TODO: use this for role
+    public String getEmail() {
+        return email;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public UserEntity setName() {
+        this.name = name;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public UserEntity setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(); // TODO: use this for role
     }
 
     @Override
@@ -58,38 +92,5 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
-    }
-
-    public UserEntity setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public UserEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public UserEntity setRole(Role role) {
-        this.role = role;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", role=" + role +
-                '}';
     }
 }

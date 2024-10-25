@@ -1,7 +1,8 @@
 package com.plansprint.backend.api.auth.services;
 
-import com.plansprint.backend.api.auth.dtos.LoginUserDto;
-import com.plansprint.backend.api.auth.dtos.RegisterUserDto;
+import com.plansprint.backend.api.auth.dtos.LoginReqDto;
+import com.plansprint.backend.api.auth.dtos.RegisterReqDto;
+import com.plansprint.backend.api.auth.dtos.RegisterRespDto;
 import com.plansprint.backend.api.users.entities.UserEntity;
 import com.plansprint.backend.api.users.enums.Role;
 import com.plansprint.backend.api.users.repositories.UserRepository;
@@ -25,24 +26,30 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public UserEntity signup(RegisterUserDto registerUserDto) {
+    public RegisterRespDto signup(RegisterReqDto registerReqDto) {
         UserEntity userEntity = new UserEntity()
-                .setEmail(registerUserDto.getEmail())
-                .setPassword(passwordEncoder.encode(registerUserDto.getPassword()))
+                .setEmail(registerReqDto.getEmail())
+                .setPassword(passwordEncoder.encode(registerReqDto.getPassword()))
                 .setRole(Role.USER); // set user as a normal user via signup flow
 
-        return userRepository.save(userEntity);
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+
+        return new RegisterRespDto()
+                .setId(savedUserEntity.getId())
+                .setEmail(savedUserEntity.getEmail())
+                .setRole(savedUserEntity.getRole())
+                .setCreatedAt(savedUserEntity.getCreatedAt());
     }
 
-    public UserEntity authenticate(LoginUserDto loginUserDto) {
+    public UserEntity authenticate(LoginReqDto loginReqDto) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginUserDto.getEmail(),
-                        loginUserDto.getPassword()
+                        loginReqDto.getEmail(),
+                        loginReqDto.getPassword()
                 )
         );
 
-        return userRepository.findByEmail(loginUserDto.getEmail())
+        return userRepository.findByEmail(loginReqDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("Something went wrong "));
     }
 }

@@ -1,6 +1,6 @@
 package com.plansprint.backend.api.auth.dtos;
 
-public class LoginResponseDto {
+public class LoginRespDto {
     private String token;
 
     private long expiresIn;
@@ -9,7 +9,7 @@ public class LoginResponseDto {
         return token;
     }
 
-    public LoginResponseDto setToken(String token) {
+    public LoginRespDto setToken(String token) {
         this.token = token;
         return this;
     }
@@ -18,7 +18,7 @@ public class LoginResponseDto {
         return expiresIn;
     }
 
-    public LoginResponseDto setExpiresIn(long expiresIn) {
+    public LoginRespDto setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
         return this;
     }

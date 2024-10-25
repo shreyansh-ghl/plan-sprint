@@ -1,5 +1,6 @@
 package com.plansprint.backend.api.users.controllers;
 
+import com.plansprint.backend.api.users.dtos.UserRespDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,11 +22,20 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserEntity> authenticatedUser() {
+    public ResponseEntity<UserRespDto> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
 
-        return ResponseEntity.ok(currentUser);
+        UserRespDto userRespDto = new UserRespDto()
+                .setId(currentUser.getId())
+                .setEmail(currentUser.getEmail())
+                .setRole(currentUser.getRole())
+                .setName(currentUser.getName())
+                .setCreatedAt(currentUser.getCreatedAt())
+                .setUpdatedAt(currentUser.getUpdatedAt())
+                .setDeletedAt(currentUser.getDeletedAt());
+
+        return ResponseEntity.ok(userRespDto);
     }
 }
