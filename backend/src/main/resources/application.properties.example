@@ -10,4 +10,5 @@ spring.flyway.enabled=true
 spring.flyway.locations=classpath:db/migrations
 # JWT configuration
 jwt.secret-key=your-special-secret
-jwt.expiration-in-ms=900000
+jwt.access-token.expiration=900000
+jwt.refresh-token.expiration=3600000

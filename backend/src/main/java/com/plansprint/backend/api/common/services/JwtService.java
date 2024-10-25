@@ -1,5 +1,6 @@
 package com.plansprint.backend.api.common.services;
 
+import com.plansprint.backend.api.common.TokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,8 +19,11 @@ public class JwtService {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    @Value("${jwt.expiration-in-ms}")
-    private long expirationInMs;
+    @Value("${jwt.access-token.expiration}")
+    private long accessTokenExpiration;
+
+    @Value("${jwt.refresh-token.expiration}")
+    private long refreshTokenExpiration;
 
     private Key generateSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -35,15 +39,20 @@ public class JwtService {
                 .getBody();
     }
 
-    private <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimResolver.apply(claims);
     }
 
-    public String generateToken(Map<String, Object> claims, String subject) {
+    public String buildToken(String subject, Map<String, Object> claims, TokenType tokenType) {
         long currentTimeMillis = System.currentTimeMillis();
         Date issuedAt = new Date(currentTimeMillis);
-        Date expirationAt = new Date(currentTimeMillis + expirationInMs);
+
+        long expirationTime = (tokenType == TokenType.ACCESS)
+                ? accessTokenExpiration
+                : refreshTokenExpiration;
+
+        Date expirationAt = new Date(currentTimeMillis + expirationTime);
 
         return Jwts
                 .builder()
@@ -59,8 +68,12 @@ public class JwtService {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public long getExpirationInMs() {
-        return expirationInMs;
+    public long getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
+
+    public long getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
     }
 
     private Date getExpirationDateFromToken(String token) {
@@ -71,8 +84,7 @@ public class JwtService {
         return getExpirationDateFromToken(token).before(new Date());
     }
 
-    public boolean isTokenValid(String token, String expectedSubject) {
-        final String actualSubject = getSubjectFromToken(token);
-        return (expectedSubject.equals(actualSubject) && !hasTokenExpired(token));
+    public boolean isTokenValid(String token) {
+        return !hasTokenExpired(token);
     }
 }

@@ -1,25 +1,25 @@
 package com.plansprint.backend.api.auth.dtos;
 
 public class LoginRespDto {
-    private String token;
+    private String accessToken;
 
-    private long expiresIn;
+    private String refreshToken;
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public LoginRespDto setToken(String token) {
-        this.token = token;
+    public LoginRespDto setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
         return this;
     }
 
-    public long getExpiresIn() {
-        return expiresIn;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public LoginRespDto setExpiresIn(long expiresIn) {
-        this.expiresIn = expiresIn;
+    public LoginRespDto setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
         return this;
     }
 }
